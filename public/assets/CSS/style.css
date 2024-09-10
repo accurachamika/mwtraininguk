@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.auth-container {
+  width: 100%;
+  min-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-title {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: #333;
+}
+
+.auth-form {
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.login-left-container {
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px 0px 0px 10px;
+  background-size: cover;
+}/*# sourceMappingURL=style.css.map */
