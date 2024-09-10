@@ -4,12 +4,21 @@
 <div class="auth-container">
     <div class="auth-form">
         <h2 class="auth-title">Sign Up</h2>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('register.post') }}">
             @csrf
             <div class="mb-3">
-                <label for="username" class="form-label">User Name</label>
-                <input type="text" name="username" class="form-control border" id="username" required>
+                <label for="user_name" class="form-label">User Name</label>
+                <input type="text" name="user_name" class="form-control border" id="user_name" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label ">Password</label>

@@ -10,6 +10,7 @@ body {
     min-width: 600px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #fff;
 }
 .auth-title {
     margin-bottom: 1.5rem;
@@ -28,4 +29,19 @@ body {
     background-size: cover;
 }
 
+.alert{
+    position: absolute;
+    top: 10%;
+    right: 1%;
+    transform: translate(0px, 0px);
+    transition: transform  ease-in 0.4s;
+}
+
+.alert.alert-danger ul li {
+    list-style: none;
+}
+
+.alert.alert-danger ul {
+    padding: 0;margin: 0;
+}
 

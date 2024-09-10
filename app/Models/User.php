@@ -17,7 +17,9 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'adminusers';
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+    public $incrementing = true;
 
     /**
      * The attributes that are mass assignable.
@@ -25,9 +27,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_name ',
+        'user_name',
         'password',
-        'c_date'
     ];
 
 }

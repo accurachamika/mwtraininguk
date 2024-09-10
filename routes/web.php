@@ -19,4 +19,5 @@ Route::get('/register', function () { return view('auth.register'); }) ->name('r
 
 
 
-Route::post('/user', [UserController::class, 'regPost'])->name('register.post');
+Route::post('/user-register', [UserController::class, 'regPost'])->name('register.post');
+Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post');
