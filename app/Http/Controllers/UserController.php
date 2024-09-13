@@ -53,13 +53,22 @@ class UserController extends BaseController
 
         if(Auth::attempt($credentials , $remember)){
             $user = Auth::user();
-
-            return redirect(route('register'));
+            return redirect()->route('home')->with(['data'=>$user]);
         }
 
         return back()->withErrors([
             'login_error' => 'Invalid credentials or user not found',
         ])->withInput($request->only('user_name'));
 
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout(); // Logs out the user
+
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
+
+        return redirect()->route('login'); // Redirect to login page after logout
     }
 }
