@@ -10,7 +10,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -72,11 +71,4 @@ class UserController extends BaseController
 
         return redirect()->route('login'); // Redirect to login page after logout
     }
-
-
-    public function runSeeder()
-{
-    Artisan::call('db:seed', ['--class' => 'UsersTableSeeder']);
-    return 'Seeder has been executed!';
-}
 }
