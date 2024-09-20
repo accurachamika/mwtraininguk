@@ -27,7 +27,9 @@
     <link  rel="stylesheet" href="{{url('assets/CSS/theme-style.css')}}">
     <link  rel="stylesheet" href="{{url('assets/CSS/style.css')}}">
 
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -44,16 +46,22 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.html" class="navbar-brand mx-4 mb-3 text-center">
+                <a href="{{route('home')}}" class="navbar-brand mx-4 mb-3 text-center">
                     <h4 class="text-primary">mwTRAININGuk</h4>
                 </a>
 
                 <div class="navbar-nav w-100">
                     <a href="{{route('home')}}" class="nav-item nav-link {{Route::is('home')? 'active' : ''}}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    
+                    @if(Auth::user()->user_type === 'admin')
+                    <a href="{{route('search')}}" class="nav-item nav-link {{Route::is('search')? 'active' : ''}}"><i class="fas fa-search"></i>Search</a>
                     <a href="{{route('category')}}" class="nav-item nav-link {{Route::is('category')? 'active' : ''}}"><i class="fas fa-clipboard-list"></i>Category</a>
                     <a href="{{route('upload')}}" class="nav-item nav-link {{Route::is('upload')? 'active' : ''}}"><i class="fas fa-file-upload"></i>Upload</a>
                     <a href="{{route('manage')}}" class="nav-item nav-link {{Route::is('manage')? 'active' : ''}}"><i class="fas fa-tasks"></i>Manage</a>
-                    <a href="{{route('search')}}" class="nav-item nav-link {{Route::is('search')? 'active' : ''}}"><i class="fas fa-search"></i>Search</a>
+                    
+                    @else
+                    <a href="{{route('stdManage')}}" class="nav-item nav-link {{Route::is('manage')? 'active' : ''}}"><i class="fas fa-tasks"></i>View Documents</a>
+                    @endif
                 </div>
             </nav>
         </div>

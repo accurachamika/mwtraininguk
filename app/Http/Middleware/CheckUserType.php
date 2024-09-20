@@ -17,10 +17,16 @@ class CheckUserType
      */
     public function handle(Request $request, Closure $next , $role)
     {
-        if(Auth::check() && Auth::user()->user_type === $role){
-            return $next($request);
+        // Check if the user is authenticated
+        if (!Auth::check()) {
+            return redirect('/')->with('error', 'Please log in to access this page.');
         }
 
-        return redirect('/home')->with('error', 'Unauthorized Access');
+        // Check if the authenticated user's role matches the required role
+        if (Auth::user()->user_type !== $role) {
+            return redirect('/home')->with('error', 'Unauthorized Access');
+        }
+
+        return $next($request);
     }
 }

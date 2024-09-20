@@ -26,8 +26,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="inputState" class="form-label">Document Category <span class="text-danger">*</span></label>
-                        <select id="inputState" class="form-select" required>
+                        <label for="doc_cat" class="form-label">Document Category <span class="text-danger">*</span></label>
+                        <select id="doc_cat" class="form-select" required name="doc_cat">
                           <option>Please Select Category</option>
                           @if(count($categories) > 0)
                           @foreach ($categories as $cat)
@@ -37,7 +37,7 @@
                             <option> No data </option>
                           @endif
                         </select>
-                        @if(count($categories) === 0)
+                        @if(count($categories) === 0 || count($categories) < 3)
                             <a href="{{route('category')}}" class="small mt-2">Add New Category</a>
                         @endif
                       </div>
@@ -45,6 +45,7 @@
                     <div class="col-md-6">
                       <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
                       <input class="form-control" type="file" id="document" name="document" required>
+                      <input class="form-control" type="text" id="uploaded_by" name="uploaded_by" value="{{Auth::user()->user_name}}" hidden>
                     </div>
                     <div class="col-md-6">
                       <label for="doc_desc" class="form-label">Document Description</label>
