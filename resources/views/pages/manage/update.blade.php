@@ -30,7 +30,7 @@
                     <div class="col-md-6">
                         <label for="doc_cat" class="form-label">Document Category <span class="text-danger">*</span></label>
                         <select id="doc_cat" class="form-select"  name="doc_cat" required>
-                          <option> Please Select</option>
+                          <option value=""> Please Select</option>
 
                           @if($doc_type)
 
@@ -47,7 +47,7 @@
                     <div class="col-md-6">
                       <label for="document" class="form-label">Document </label>
                       <input class="form-control" type="file" id="document" name="document">
-                      <span class="text-secondary small">File name : <span class="text-dark">{{$doc->file_name}}</span></span><br>
+                      <span class="text-secondary small">File name : <span class="text-dark" style="text-wrap: balance;display: inline;max-width: 100%;position: relative;word-wrap: break-word;">{{$doc->file_name}}</span></span><br>
                       <span><a href="{{route('manage.doc.view' , $doc->doc_id)}}" class="text-decoration-none">View File</a></span>
                     </div>
                     <div class="col-md-6">

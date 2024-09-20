@@ -52,7 +52,14 @@ Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) 
 Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
 Route::get('/manage/search/{id}', [DocumentController::class , 'filter']) ->name('manage.search');
 
-Route::get('/search', function () { return view('pages.search'); }) ->name('search');
+Route::get('/search', function () { 
+    $categories = \App\Models\Category::all();
+    return view('pages.search', ['categories'=> $categories] ); 
+}) ->name('search');
+
+Route::post('/search-post', [DocumentController::class , 'search']) ->name('search.post');
+
+
 
 #Category Route
 Route::get('/category', function () {

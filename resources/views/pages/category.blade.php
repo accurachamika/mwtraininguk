@@ -24,7 +24,7 @@
                 <h4 class="card-title"> Category </h4>
             </div>
 
-            <div class="col-md-8 px-0">
+            <div class="col-md-5 me-3">
                 <div class="card-content ">
                     <form class="row g-3" method="POST" action="{{ route('category.post') }}">
                         @csrf
@@ -42,7 +42,7 @@
             </div>
 
             {{-- Display categories --}}
-            <div class="col-md-8 px-0">
+            <div class="col-md-6 px-0">
                 <div class="card-content ">
                     @if (count($categories) > 0)
                         <div class="text-end w-100 mb-2">
@@ -50,12 +50,15 @@
                                     class="far fa-trash-alt"></i> Delete All Categories</a>
                         </div>
                     @endif
-                    <table class="table table-hover">
-                        <tr>
-                            <th>#ID</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                        </tr>
+                    <table class="table table-hover" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @if ($categories && count($categories) > 0)
                             @foreach ($categories as $cat)
                                 <tr>
@@ -72,6 +75,7 @@
                                 <td colspan="3" class="text-center "><b>No data found</b></td>
                             </tr>
                         @endif
+                    </tbody>
                     </table>
                 </div>
             </div>
@@ -80,5 +84,20 @@
 
         </div>
     </div>
+
+@if( count($categories) !== 0)
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function() {
+        $('#data-table').DataTable({
+            "paging": true,         // Enable pagination
+            "searching": true,      // Enable searching
+            "info": true,           // Show table information
+            "lengthChange": true,    // Enable the ability to change page length
+            "pageLength": 5         // Set the default number of records per page
+        });
+    });
+</script>
+@endif
 
 @endsection
