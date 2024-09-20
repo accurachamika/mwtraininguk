@@ -24,21 +24,11 @@
                 <span class="me-3 h1 mb-0 text-secondary"><i class="fas fa-tasks"></i></span>
                 <h4 class="card-title"> Manage Documents</h4>
             </div>
-            <div class="text-end">
-                @if (count($documents) > 0)
-                {{-- <a href="{{ route('doc.truncate') }}" class="btn btn-outline-danger"> <i
-                        class="far fa-trash-alt"></i> Delete All documents</a> --}}
-                @endif
-                <a href="{{ route('upload') }}" class="btn btn-outline-success mx-1"> <i
-                    class="far fa-trash-alt"></i> Upload Documents</a>
-                <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger"> <i
-                    class="far fa-trash-alt"></i> Delete Resource Folder</a>
-            </div>
         </div>
         {{-- Display categories --}}
         <div class="col-md-12 px-0">
-            <div class="card-content " style="max-width: 100%; overflow-x: auto">
-                <table class="table table-hover"  id="data-table" style="width: 100%; table-layout: auto; white-space: nowrap;" >
+            <div class="card-content ">
+                <table class="table table-hover"  id="data-table">
                     <thead>
                         <tr>
                             <th>Student Id</th>
@@ -58,15 +48,9 @@
                                 <td>{{ $doc->std_name }}</td>
                                 <td>{{ $doc->file_name }}</td>
                                 <td>{{ $doc->doc_type }}</td>
-                                <td>{{ $doc->desc === null ? 'NULL' : Str::limit($doc->desc , 10) }}</td>
+                                <td>{{ $doc->desc === null ? 'NULL' : $doc->desc }}</td>
                                 <td>{{ date('Y-m-d' , strtotime($doc->last_updated))}}</td>
-                                <td> 
-                                    <a href="{{route('manage.view' , $doc->doc_id )}}" class="small text-info" title="View Document"><i class="fas fa-eye"></i></a> |
-                                    <a href="{{route('manage.update' , $doc->doc_id )}}" class="small text-warning" title="Edit Document"><i class="fas fa-edit"></i></a> |
-                                    <a href="{{route('manage.delete' , $doc->doc_id )}}" class="small text-danger" title="Delete Document"><i class="fas fa-trash-alt"></i></a> |
-                                    <a href="{{route('manage.download' , $doc->doc_id )}}" class="small text-success" title="Download Document"><i class="fas fa-file-download"></i></a> |
-                                    <a href="{{route('manage.search' , $doc->std_id )}}" class="small text-primary" title="Download Document"><i class="fas fa-search"></i></a>
-                                </td>
+                                <td class="text-center "> <a href="{{route('manage.stdView' , $doc->doc_id )}}" class="small text-info" title="View Document"><i class="fas fa-eye"></i></a></td>
                             </tr>
                         @endforeach
                     @else

@@ -27,17 +27,34 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::middleware(['checkUserType:admin'])->group(function () {
 
 #Upload Route
-Route::get('/upload', function () {
+Route::get('/document', function () {
     $categories = \App\Models\Category::all();
     return view('pages.upload', ['categories'=> $categories] );
 }) ->name('upload');
 
-Route::post('/upload', [DocumentController::class,'docPost'] )->name('upload.post');
+Route::post('/document/upload', [DocumentController::class,'docPost'] )->name('upload.post');
+Route::get('/document/truncate', [DocumentController::class, 'truncate'])->name('doc.truncate'); // Clear Document table at once
+Route::get('/document/truncate-res', [DocumentController::class, 'truncateRes'])->name('doc.resource'); // Clear Document table at once
 
 
-Route::get('/manage', function () { return view('pages.manage'); }) ->name('manage');
+#Manage Documents Route
+Route::get('/manage', function () { 
+    $documents = \App\Models\Document::all();
+    return view('pages.manage' , ['documents' => $documents]); 
+}) ->name('manage');
+
+Route::get('/manage/update/{id}', [DocumentController::class , 'manageUpdate']) ->name('manage.update');
+Route::post('/manage/update-post', [DocumentController::class , 'updatePost']) ->name('edit.post');
+
+Route::get('/manage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.view');
+
+Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) ->name('manage.delete');
+Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
+Route::get('/manage/search/{id}', [DocumentController::class , 'filter']) ->name('manage.search');
+
 Route::get('/search', function () { return view('pages.search'); }) ->name('search');
 
+#Category Route
 Route::get('/category', function () {
     $categories = \App\Models\Category::all();
     return view('pages.category', ['categories'=> $categories]);
@@ -45,12 +62,22 @@ Route::get('/category', function () {
 
 Route::post('/category-post', [CategoryController::class, 'createCat']) ->name('category.post');
 Route::get('/category-delete/{id}', [CategoryController::class, 'deleteCat']) ->name('category.delete');
-Route::get('/category/truncate', [CategoryController::class, 'truncate'])->name('category.truncate');
+Route::get('/category/truncate', [CategoryController::class, 'truncate'])->name('category.truncate'); // Clear Category table at once
 });
 
+
+#Protected Routes
+Route::middleware(['checkUserType:student'])->group(function () {
+
+Route::get('/stdManage', [DocumentController::class , 'std_Filter']) ->name('stdManage');
+Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.stdView');
+
+});
+
+
+#Unprotected Routes
 Route::get('/home', function () { return view('pages.home'); }) ->name('home');
-
-
+Route::get('/manage/viewDoc/{id}', [DocumentController::class , 'manageDocView']) ->name('manage.doc.view');
 
 
 
