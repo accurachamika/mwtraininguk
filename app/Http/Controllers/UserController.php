@@ -53,7 +53,7 @@ class UserController extends BaseController
 
         if(Auth::attempt($credentials , $remember)){
             $user = Auth::user();
-            return redirect()->route('home')->with(['data'=>$user]);
+            return redirect()->route('home')->with(['data'=>$user , 'success'=> 'Successfully Logged in']);
         }
 
         return back()->withErrors([
