@@ -22,6 +22,7 @@ Route::get('/register', function () { return view('auth.register'); }) ->name('r
 Route::post('/user-register', [UserController::class, 'regPost'])->name('register.post');
 Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/run-seeder', [UserController::class, 'runSeeder']);
 
 #Protected Routes
 Route::middleware(['checkUserType:admin'])->group(function () {
