@@ -46,7 +46,7 @@
         </div>
 
         <div class="col-md-6 text-center">
-            <img src="{{url('assets/images/doc.jpg')}}" alt="">
+            <img src="{{url('assets/images/doc.jpg')}}" alt="" class="search-img">
         </div>
     </div>
 </div>

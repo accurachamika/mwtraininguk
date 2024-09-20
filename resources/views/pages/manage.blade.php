@@ -19,7 +19,7 @@
 <!-- Sales Chart Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-12 card-cs d-flex justify-content-between align-items-center">
+        <div class="col-12 card-cs d-flex justify-content-between align-items-center manage-head">
             <div class="d-flex align-items-center">
                 <span class="me-3 h1 mb-0 text-secondary"><i class="fas fa-tasks"></i></span>
                 <h4 class="card-title"> Manage Documents</h4>
@@ -34,6 +34,24 @@
                 <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger"> <i
                     class="far fa-trash-alt"></i> Delete Resource Folder</a>
             </div>
+        </div>
+
+        <div class="col-12 card-cs d-flex justify-content-between align-items-center manage-head-sm">
+            <div class="d-flex align-items-center">
+                <span class="me-3 h1 mb-0 text-secondary"><i class="fas fa-tasks"></i></span>
+                <h4 class="card-title"> Manage Documents</h4>
+            </div>
+        </div>
+
+        <div class="text-end manage-head-sm">
+            @if (count($documents) > 0)
+            {{-- <a href="{{ route('doc.truncate') }}" class="btn btn-outline-danger"> <i
+                    class="far fa-trash-alt"></i> Delete All documents</a> --}}
+            @endif
+            <a href="{{ route('upload') }}" class="btn btn-outline-success mx-1"> <i
+                class="far fa-trash-alt"></i> Upload Documents</a>
+            <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger btn-resource"> <i
+                class="far fa-trash-alt"></i> Delete Resource Folder</a>
         </div>
         {{-- Display categories --}}
         <div class="col-md-12 px-0">

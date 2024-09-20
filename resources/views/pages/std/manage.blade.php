@@ -27,8 +27,8 @@
         </div>
         {{-- Display categories --}}
         <div class="col-md-12 px-0">
-            <div class="card-content ">
-                <table class="table table-hover"  id="data-table">
+            <div class="card-content " style="max-width: 100%; overflow-x: auto">
+                <table class="table table-hover"  id="data-table" style="width: 100%; table-layout: auto; white-space: nowrap;">
                     <thead>
                         <tr>
                             <th>Student Id</th>
