@@ -52,7 +52,14 @@ Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) 
 Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
 Route::get('/manage/search/{id}', [DocumentController::class , 'filter']) ->name('manage.search');
 
-Route::get('/search', function () { return view('pages.search'); }) ->name('search');
+Route::get('/search', function () { 
+    $categories = \App\Models\Category::all();
+    return view('pages.search', ['categories'=> $categories] ); 
+}) ->name('search');
+
+Route::post('/search-post', [DocumentController::class , 'search']) ->name('search.post');
+
+
 
 #Category Route
 Route::get('/category', function () {
@@ -68,7 +75,6 @@ Route::get('/category/truncate', [CategoryController::class, 'truncate'])->name(
 
 #Protected Routes
 Route::middleware(['checkUserType:student'])->group(function () {
-
 Route::get('/stdManage', [DocumentController::class , 'std_Filter']) ->name('stdManage');
 Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.stdView');
 

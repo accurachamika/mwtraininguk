@@ -35,7 +35,7 @@
                     <div class="col-md-6">
                       <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
                       <input class="form-control" type="file" id="document" name="document" disabled>
-                      <span class="text-secondary small">File name : <span class="text-dark">{{$doc->file_name}} </span></span><br>
+                      <span class="text-secondary small">File name : <span class="text-dark" style="text-wrap: balance;display: inline;max-width: 100%;position: relative;word-wrap: break-word;">{{$doc->file_name}} </span></span><br>
                       
                     </div>
                     <div class="col-md-6">

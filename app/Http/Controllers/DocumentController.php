@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\File;
 
 class DocumentController extends Controller
 {
-    public function docPost(Request $request)  {
+    #------------------------#
+    #    Document Upload     #
+    #------------------------#
+    public function docPost(Request $request)
+    {
 
         #validate Form data
         $request->validate([
@@ -21,12 +25,12 @@ class DocumentController extends Controller
             'doc_cat' => 'required',
             'document' => 'required|file',
             'doc_desc' => 'nullable'
-            ]);
+        ]);
 
 
         #Student Details 
         $std_id = $request->std_id;
-        $std_name = str_replace(' ' , '_', $request->std_name);
+        $std_name = str_replace(' ', '_', $request->std_name);
         $doc_cat = $request->doc_cat;
         $doc_desc = $request->doc_desc ? $request->doc_desc : null;
 
@@ -36,14 +40,14 @@ class DocumentController extends Controller
         $mimeType = $document->getMimeType();
         $fileName = $document->getClientOriginalName();
         $ext = $document->getClientOriginalExtension();
-        
+
         #Generate the new file name
         $timestamp = time();
-        $newFileName = $timestamp .'~'.$std_id.'_'.$std_name.'_'.$doc_cat.'.'.$ext ;
-    
+        $newFileName = $timestamp . '~' . $std_id . '_' . $std_name . '_' . $doc_cat . '.' . $ext;
+
         # Define the directory structure
         $directory = "resources/$std_id/$doc_cat";
-        
+
         # Create the directory if it doesn't exist
         if (!file_exists($directory)) {
             mkdir($directory, 0777, true); // 0777 permissions, true for recursive creation
@@ -65,79 +69,106 @@ class DocumentController extends Controller
         # Store the file in the defined directory
         $document->move(public_path($directory), $newFileName);
 
-        if($documentCreated){
+        if ($documentCreated) {
             return redirect()->route('manage')->with('success', 'File Uploaded successfully!');
-        }else{
+        } else {
             return redirect()->route('manage')->with('error', 'Failed to Upload File');
         }
     }
 
-    public function manageView($id)  {
+    #----------------------------#
+    #    Document Upload Ends    #
+    #----------------------------#
+
+
+
+    #------------------------#
+    #    Manage : VIEW       #
+    #------------------------#
+    public function manageView($id)
+    {
         $document = Document::find($id);
-        
+
         return view('pages.manage.view', ['doc' => $document]);
     }
+    #--------------------------#
+    #    Manage : VIEW  ends   #
+    #--------------------------#
 
 
-    public function manageUpdate($id)  {
+
+    #-------------------------------#
+    #    Manage : UPDATE (View)     #
+    #-------------------------------#
+    public function manageUpdate($id)
+    {
         $document = Document::find($id);
         $doc_type = Category::all();
 
-        
-        return view('pages.manage.update', ['doc' => $document , 'doc_type' => $doc_type]);
+
+        return view('pages.manage.update', ['doc' => $document, 'doc_type' => $doc_type]);
     }
+    #-----------------------------------#
+    #    Manage : UPDATE (View) ends    #
+    #-----------------------------------#
 
-    public function updatePost(Request $request )  {
 
-    # Find the document record in the database
-    $documentRecord = Document::findOrFail($request->doc_id);
 
-    # Validate Form data
-    $request->validate([
-        'std_id' => 'required',
-        'std_name' => 'required',
-        'doc_cat' => 'required',
-        'document' => 'nullable|file',  // 'nullable' here allows the document to be null
-        'doc_desc' => 'nullable'
-    ]);
+    #-------------------------------#
+    #    Manage : UPDATE (Post)     #
+    #-------------------------------#
+    public function updatePost(Request $request)
+    {
 
-    # Student Details
-    $std_id = $request->std_id;
-    $std_name = str_replace(' ', '_', $request->std_name);
-    $doc_cat = $request->doc_cat;
-    $doc_desc = $request->doc_desc ? $request->doc_desc : null;
+        # Find the document record in the database
+        $documentRecord = Document::findOrFail($request->doc_id);
 
-    # Check if a new document is uploaded
-    if ($request->hasFile('document')) {
-        # File Details
-        $document = $request->file('document');
-        $mimeType = $document->getMimeType();
-        $ext = $document->getClientOriginalExtension();
+        # Validate Form data
+        $request->validate([
+            'std_id' => 'required',
+            'std_name' => 'required',
+            'doc_cat' => 'required',
+            'document' => 'nullable|file',  // 'nullable' here allows the document to be null
+            'doc_desc' => 'nullable'
+        ]);
 
-        # Generate the new file name
-        $timestamp = time();
-        $newFileName = $timestamp .'~'.$std_id.'_'.$std_name.'_'.$doc_cat.'.'.$ext ;
+        # Student Details
+        $std_id = $request->std_id;
+        $std_name = str_replace(' ', '_', $request->std_name);
+        $doc_cat = $request->doc_cat;
+        $doc_desc = $request->doc_desc ? $request->doc_desc : null;
 
-        # Define the directory structure
-        $directory = "resources/$std_id/$doc_cat";
+        # Check if a new document is uploaded
+        if ($request->hasFile('document')) {
+            # File Details
+            $document = $request->file('document');
+            $mimeType = $document->getMimeType();
+            $ext = $document->getClientOriginalExtension();
 
-        # Create the directory if it doesn't exist
-        if (!file_exists($directory)) {
-            mkdir($directory, 0777, true);
-        }
+            # Generate the new file name
+            $timestamp = time();
+            $newFileName = $timestamp . '~' . $std_id . '_' . $std_name . '_' . $doc_cat . '.' . $ext;
 
-        # Remove the old file if it exists
-        $oldFilePath = public_path($directory.'/'.$documentRecord->file_name);
-        if (file_exists($oldFilePath)) {
-            unlink($oldFilePath);
-        }
+            # Define the directory structure
+            $directory = "resources/$std_id/$doc_cat";
 
-        # Store the new file in the defined directory
-        $document->move(public_path($directory), $newFileName);
+            # Create the directory if it doesn't exist
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true);
+            }
 
-        # Update the document record with new file information
-        $documentRecord->file_name = $newFileName;
-        $documentRecord->mime = $mimeType;
+            # Remove the old file if it exists
+            $oldFilePath = public_path($directory . '/' . $documentRecord->file_name);
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+
+            # Store the new file in the defined directory
+            $document->move(public_path($directory), $newFileName);
+
+            # Update the document record with new file information
+            $documentRecord->file_name = $newFileName;
+            $documentRecord->mime = $mimeType;
         }
 
         # Update other fields in the database
@@ -147,23 +178,30 @@ class DocumentController extends Controller
         $documentRecord->last_updated = Carbon::now();
         $documentRecord->desc = $doc_desc;
         $documentRecord->uploaded_by = $request->uploaded_by;
-        
+
         // dd($documentRecord);
         # Save the updated record
-        if($documentRecord->save()){
+        if ($documentRecord->save()) {
             return redirect()->route('manage')->with('success', 'Document updated successfully!');
         } else {
             return redirect()->route('manage')->with('error', 'Failed to update Document');
         }
-            
-        }
+    }
+    #-----------------------------------#
+    #    Manage : UPDATE (Post) ends    #
+    #-----------------------------------#
 
-    public function manageDelete($id)  {
+
+    #-------------------------#
+    #    Manage : DELETE      #
+    #-------------------------#
+    public function manageDelete($id)
+    {
         $document = Document::find($id);
         $document_path =  "resources/$document->std_id/$document->doc_type/$document->file_name";
-        
-        if($document->delete()){
-            if(file_exists($document_path)){
+
+        if ($document->delete()) {
+            if (file_exists($document_path)) {
                 unlink($document_path);
             }
             return redirect()->route('manage')->with('success', 'Document Deleted successfully!');
@@ -171,54 +209,17 @@ class DocumentController extends Controller
             return redirect()->route('manage')->with('error', 'Failed to delete Document');
         }
     }
+    #-----------------------------#
+    #    Manage : DELETE  ends    #
+    #-----------------------------#
 
 
-    public function truncate(): RedirectResponse
+
+    #-----------------------------#
+    #    Manage : DOWNLOAD        #
+    #-----------------------------#
+    public function manageDownload($id)
     {
-        // Truncate the category table
-        Document::truncate();
-
-        // Redirect to the category page with a success message
-        return redirect()->route('manage')->with('success', 'All documents have been deleted!');
-    }
-
-    public function truncateRes(): RedirectResponse
-    {
-        // Truncate the category table
-        Document::truncate();
-        $document_path =  "resources";
-
-        if(file_exists($document_path)){
-            File::deleteDirectory(public_path($document_path));
-        }
-
-        // Redirect to the category page with a success message
-        return redirect()->route('manage')->with('success', 'All documents have been deleted!');
-    }
-
-
-    public function std_Filter() {
-        
-        $std_id = Auth::user()->user_name;
-
-        $documents = Document::where('std_id' , $std_id)->get();
-        
-        return view('pages.std.manage' , ['documents' => $documents]);
-    }
-
-    public function filter($std_id_filter) {
-        if($std_id_filter){
-            $std_id = $std_id_filter;
-        }else{
-            $std_id = Auth::user()->user_name;
-        }
-        
-        $documents = Document::where('std_id' , $std_id)->get();
-        
-        return view('pages.manage' , ['documents' => $documents]);
-    }
-
-    public function manageDownload($id)  {
         $document = Document::findOrFail($id);
 
         // Define the file path
@@ -230,8 +231,17 @@ class DocumentController extends Controller
             return redirect()->route('manage')->with('error', 'File not found!');
         }
     }
+    #-------------------------------#
+    #    Manage : DOWNLOAD  ends    #
+    #-------------------------------#
 
-    public function manageDocView($doc_id) {
+
+
+    #-------------------------------#
+    #    Manage : DOC VIEW          #
+    #-------------------------------#
+    public function manageDocView($doc_id)
+    {
         $documents = Document::findOrFail($doc_id);
         $filePath = public_path("resources/{$documents->std_id}/{$documents->doc_type}/{$documents->file_name}");
 
@@ -242,6 +252,128 @@ class DocumentController extends Controller
             return redirect()->back()->with('error', 'File not found!');
         }
     }
+    #-------------------------------#
+    #    Manage : DOC VIEW  end     #
+    #-------------------------------#
 
-    
+
+
+    #-----------------------------------#
+    #-----------------------------------#
+    #-----------------------------------#
+    #   FUNCTIONS FOR FILTER DATA       #
+    #-----------------------------------#
+    #-----------------------------------#
+    #-----------------------------------#
+
+    #------------------------------------#
+    #    Student Portal : std_id Filter  #
+    #------------------------------------#
+    public function std_Filter()
+    {
+
+        $std_id = Auth::user()->user_name;
+
+        $documents = Document::where('std_id', $std_id)->get();
+
+        return view('pages.std.manage', ['documents' => $documents]);
+    }
+    #----------------------------------------#
+    #    Student Portal : std_id Filter end  #
+    #----------------------------------------#
+
+
+
+    #------------------------------------#
+    #    Admin   Portal : std_id Filter  #
+    #------------------------------------#
+    public function filter($std_id_filter)
+    {
+        if ($std_id_filter) {
+            $std_id = $std_id_filter;
+        } else {
+            $std_id = Auth::user()->user_name;
+        }
+
+        $documents = Document::where('std_id', $std_id)->get();
+
+        return view('pages.manage', ['documents' => $documents]);
+    }
+    #-----------------------------------------#
+    #    Admin   Portal : std_id Filter ends  #
+    #-----------------------------------------#
+
+
+
+    #------------------------------------#
+    #    Admin Portal : Search   Filter  #
+    #------------------------------------#
+    public function search(Request $request)
+    {
+        $std_id = $request->std_id ? $request->std_id : null;
+        $std_name = $request->std_name ? $request->std_name : null;
+        $doc_cat = $request->doc_cat ? $request->doc_cat : null;
+
+        $documents = Document::query()
+            ->when($std_id, function ($query, $std_id) {
+                return $query->where('std_id', $std_id);
+            })
+            ->when($std_name, function ($query, $std_name) {
+                return $query->where('std_name', 'like', '%' . $std_name . '%');
+            })
+            ->when($doc_cat, function ($query, $doc_cat) {
+                return $query->where('doc_type', $doc_cat);
+            })->get();
+
+        return view('pages.manage', ['documents' => $documents]);
+    }
+    #----------------------------------------#
+    #    Admin Portal : Search   Filter ends #
+    #----------------------------------------#
+
+
+
+    #------------------------------------------#
+    #------------------------------------------#
+    #------------------------------------------#
+    #   FUNCTIONS FOR TRUNCATE DB TABLES       #
+    #------------------------------------------#
+    #------------------------------------------#
+    #------------------------------------------#
+
+    #-------------------------------#
+    #   Trancate Document Table     #
+    #-------------------------------#
+    public function truncate(): RedirectResponse
+    {
+        // Truncate the category table
+        Document::truncate();
+
+        // Redirect to the category page with a success message
+        return redirect()->route('manage')->with('success', 'All documents have been deleted!');
+    }
+    #----------------------------------#
+    #    Trancate Document Table end   #
+    #----------------------------------#
+
+    #---------------------------------------------------------#
+    #   Trancate Document Table AND Delete Resouces folder    #
+    #---------------------------------------------------------#
+    public function truncateRes(): RedirectResponse
+    {
+        // Truncate the category table
+        Document::truncate();
+        $document_path =  "resources";
+
+        if (file_exists($document_path)) {
+            File::deleteDirectory(public_path($document_path));
+        }
+
+        // Redirect to the category page with a success message
+        return redirect()->route('manage')->with('success', 'All documents have been deleted!');
+    }
+
+    #------------------------------------------------------------#
+    #   Trancate Document Table AND Delete Resouces folder end   #
+    #------------------------------------------------------------#
 }

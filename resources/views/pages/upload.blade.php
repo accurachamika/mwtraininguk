@@ -28,7 +28,7 @@
                     <div class="col-md-6">
                         <label for="doc_cat" class="form-label">Document Category <span class="text-danger">*</span></label>
                         <select id="doc_cat" class="form-select" required name="doc_cat">
-                          <option>Please Select Category</option>
+                          <option value="">Please Select Category</option>
                           @if(count($categories) > 0)
                           @foreach ($categories as $cat)
                             <option value="{{$cat->name}}"> {{$cat->name}} </option>

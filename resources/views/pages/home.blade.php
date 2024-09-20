@@ -19,7 +19,7 @@
     <div class="row g-4">
         <div class="col-12 card-cs d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center">
-              <span class="me-3 h1 mb-0 text-secondary"><i class="fas fa-door-open"></i></span>
+              {{-- <span class="me-3 h1 mb-0 text-secondary"><i class="fas fa-door-open"></i></span> --}}
               <h3 class="card-title"> Welcome to Document Management System</h3>
           </div>
       </div>

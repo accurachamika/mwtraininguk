@@ -63,4 +63,35 @@ body {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.19);
+}
+
+.manage-head-sm {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .manage-head {
+    display: none !important;
+  }
+  .manage-head-sm {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 446px) {
+  .manage-head-sm {
+    display: flex !important;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .search-img {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .auth-container {
+    min-width: unset;
+  }
+  .auth-wrapper {
+    padding: 10px;
+  }
 }/*# sourceMappingURL=style.css.map */
