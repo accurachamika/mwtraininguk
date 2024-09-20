@@ -75,7 +75,6 @@ Route::get('/category/truncate', [CategoryController::class, 'truncate'])->name(
 
 #Protected Routes
 Route::middleware(['checkUserType:student'])->group(function () {
-
 Route::get('/stdManage', [DocumentController::class , 'std_Filter']) ->name('stdManage');
 Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.stdView');
 

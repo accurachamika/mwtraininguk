@@ -24,7 +24,7 @@
                 <h4 class="card-title"> Category </h4>
             </div>
 
-            <div class="col-md-5 me-3">
+            <div class="col-md-12 col-lg-12 me-3">
                 <div class="card-content ">
                     <form class="row g-3" method="POST" action="{{ route('category.post') }}">
                         @csrf
@@ -42,15 +42,15 @@
             </div>
 
             {{-- Display categories --}}
-            <div class="col-md-6 px-0">
-                <div class="card-content ">
+            <div class="col-md-12 col-lg-8">
+                <div class="card-content " style="max-width: 100%; overflow-x: auto">
                     @if (count($categories) > 0)
                         <div class="text-end w-100 mb-2">
                             <a href="{{ route('category.truncate') }}" class="btn btn-outline-danger"> <i
                                     class="far fa-trash-alt"></i> Delete All Categories</a>
                         </div>
                     @endif
-                    <table class="table table-hover" id="data-table">
+                    <table class="table table-hover" id="data-table" style="width: 100%; table-layout: auto; white-space: nowrap;">
                         <thead>
                             <tr>
                                 <th>#ID</th>
