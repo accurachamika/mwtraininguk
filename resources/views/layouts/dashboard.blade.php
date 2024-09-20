@@ -46,11 +46,12 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
+
                 <a href="{{route('home')}}" class="navbar-brand mx-4 mb-3 text-center">
                     <h4 class="text-primary">mwTRAININGuk</h4>
                 </a>
 
-                <div class="navbar-nav w-100">
+                <div class="navbar-nav w-100"> 
                     <a href="{{route('home')}}" class="nav-item nav-link {{Route::is('home')? 'active' : ''}}"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     
                     @if(Auth::user()->user_type === 'admin')
@@ -73,7 +74,11 @@
 
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0 shadow-sm">
+                <button type="button" class="border-none sidebar-toggler">
+                    <i class="fas fa-bars shadow-sm"></i>
+                </button>
                 <div class="navbar-nav align-items-center ms-auto">
+                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="{{url('assets/images/user-img.jpg')}}" alt="" style="width: 40px; height: 40px;">

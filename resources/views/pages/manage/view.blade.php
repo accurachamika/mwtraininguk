@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="col-md-12 px-0">
+        <div class="col-md-12 px-0"> 
             <div class="card-content ">
                 <form class="row g-3"  method="POST" action="" enctype="multipart/form-data" >
                     @csrf

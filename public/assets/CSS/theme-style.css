@@ -196,8 +196,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #FFFFFF;
-    border-radius: 40px;
+    background: transparent;
+    border: none;
 }
 
 .content .navbar .dropdown-toggle::after {
