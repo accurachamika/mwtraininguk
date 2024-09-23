@@ -54,6 +54,11 @@ class UserController extends BaseController
 
         if(Auth::attempt($credentials , $remember)){
             $user = Auth::user();
+            if($user->active === 0){
+                return back()->withErrors([
+                    'login_error' => 'User not activated. Please contact admin',
+                ]);
+            }
             return redirect()->route('home')->with(['data'=>$user , 'success'=> 'Successfully Logged in']);
         }
 
@@ -78,5 +83,22 @@ class UserController extends BaseController
     {
         Artisan::call('db:seed', ['--class' => 'UsersTableSeeder']);
         return 'Seeder has been executed!';
+    }
+    
+
+    public function acc_activate($id) {
+        $user = User::find($id);
+
+        if($user->active === 0){
+            $user->active = 1;
+        }else{
+            $user->active = 0;
+        }
+
+        if($user->save()){
+            return redirect()->route('userlist')->with('success', ($user->active === 1) ? 'User Successfully Activated' : 'User Successfully Deactivated');
+        }else{
+            return redirect()->route('userlist')->with('error', ($user->active === 1) ? 'User fail to Activate' : 'User fail to Deactivate');
+        }
     }
 }
