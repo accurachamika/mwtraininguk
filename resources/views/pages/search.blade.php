@@ -26,7 +26,7 @@
 
 
                 <div class="col-md-6">
-                  <label for="document" class="form-label">Document Category</label>
+                  <label for="doc_cat" class="form-label">Document Category</label>
                   <select id="doc_cat" class="form-select" name="doc_cat">
                     <option value="">Please Select Category</option>
                         @if(count($categories) > 0)

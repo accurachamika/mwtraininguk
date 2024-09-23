@@ -11,8 +11,11 @@ class CategoryController extends Controller
     public function createCat(Request $request): RedirectResponse
     {
         $request->validate([
-            'cat_name' => 'required',
-            'string'
+            'cat_name' => 'required|unique:category,name|string ',
+        ] , [
+            'cat_name.required' => 'The category name is required.',
+            'cat_name.string' => 'The category name must be a valid string.',
+            'cat_name.unique' => 'The category name has already been taken.', 
         ]);
 
         $category = Category::create([

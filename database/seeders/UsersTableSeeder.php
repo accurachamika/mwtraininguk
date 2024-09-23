@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
             'user_type' => 'admin',
             'user_name' => 'admin',
             'password' => Hash::make('password123'),
+            'active' => 1,
             'created_at' => now(),
             'updated_at' => now(),
          ]);

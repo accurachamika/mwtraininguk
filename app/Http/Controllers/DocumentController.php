@@ -20,12 +20,19 @@ class DocumentController extends Controller
 
         #validate Form data
         $request->validate([
-            'std_id' => 'required',
+            'std_id' => ['required','regex:/^[a-zA-Z0-9]+$/'],
             'std_name' => 'required',
             'doc_cat' => 'required',
-            'document' => 'required|file',
+            'document' => 'required|file|mimes:pdf,doc,docx,ppt,xls,zip,rar,jpg,png|max:5120', // 5MB = 5120KB
             'doc_desc' => 'nullable'
+        ], [
+            'std_id.regex' => 'The Student Id can only contain alphabetic letters and numbers.',
+            'document.required' => 'The document is required.',
+            'document.file' => 'The uploaded file must be a valid file.',
+            'document.mimes' => 'The document must be a file of type: pdf, doc, docx, ppt, xls, zip, rar, jpg, png.',
+            'document.max' => 'The document may not be greater than 5MB.', // Updated error message for size limit
         ]);
+        
 
 
         #Student Details 
