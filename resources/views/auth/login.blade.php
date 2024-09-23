@@ -49,6 +49,12 @@
                         </div>
                     @endif
 
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     <!-- Signup Link -->
                     <p class="mt-3 text-center">
                         Don't have an account? <a href="{{ route('register')}}" class="link-primary">Sign Up</a>

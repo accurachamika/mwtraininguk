@@ -22,8 +22,13 @@ class UserController extends BaseController
 
    public function regPost(Request $request) : RedirectResponse {
         $request->validate([
-            'user_name' => ['required', 'string' , 'unique:users,user_name'],
+            'user_name' => ['required', 'string' , 'unique:users,user_name' , 'regex:/^[a-zA-Z0-9]+$/' , 'min:3'],
             'password' => ['required', Rules\Password::defaults()],
+        ] , [
+            'user_name.required' => 'The username is required.',
+            'user_name.min' => 'The username must be at least 3 characters long.',
+            'user_name.regex' => 'The username can only contain alphabetic letters and numbers.',
+            'user_name.unique' => 'The username has already been taken.',
         ]);
 
         $user = User::create([
@@ -34,7 +39,7 @@ class UserController extends BaseController
         event(new Registered($user));
         Auth::login($user);
 
-        return redirect(route('login'));
+        return redirect()->route('login')->with(['success'=> 'Account created successfully.Please wait for Admin approval!']);
     }
 
 
