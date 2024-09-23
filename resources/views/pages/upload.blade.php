@@ -4,6 +4,28 @@
 
 @section('content')
 
+@if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+@endif
+
 <!-- Sales Chart Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-3">
@@ -14,7 +36,7 @@
 
         <div class="col-md-12 px-0">
             <div class="card-content ">
-                <form class="row g-3"  method="POST" action="{{route('upload.post')}}" enctype="multipart/form-data">
+                <form class="row g-3"  method="POST" action="{{route('upload.post')}}" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <div class="col-md-6">
                       <label for="std_id" class="form-label">Student ID <span class="text-danger">*</span></label>
@@ -46,6 +68,7 @@
                       <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
                       <input class="form-control" type="file" id="document" name="document" required>
                       <input class="form-control" type="text" id="uploaded_by" name="uploaded_by" value="{{Auth::user()->user_name}}" hidden>
+                      <small id="file-error" class="text-danger"></small> <!-- Display error here -->
                     </div>
                     <div class="col-md-6">
                       <label for="doc_desc" class="form-label">Document Description</label>
@@ -62,5 +85,40 @@
 
     </div>
 </div>
+
+<!-- Frontend File Validation Script -->
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        const allowedFileTypes = ['pdf', 'doc', 'docx', 'ppt', 'xls', 'zip', 'rar', 'jpg', 'png'];
+        const fileInput = document.getElementById('document');
+        const file = fileInput.files[0];
+        const fileError = document.getElementById('file-error');
+
+        // Reset error message
+        fileError.textContent = '';
+
+        // Check if a file is selected
+        if (!file) {
+            fileError.textContent = 'Please select a file to upload.';
+            event.preventDefault();
+            return;
+        }
+
+        // Check file size (5MB = 5242880 bytes)
+        if (file.size > 5242880) {
+            fileError.textContent = 'The file may not be greater than 5MB.';
+            event.preventDefault();
+            return;
+        }
+
+        // Check file type
+        const fileExtension = file.name.split('.').pop().toLowerCase();
+        if (!allowedFileTypes.includes(fileExtension)) {
+            fileError.textContent = 'The document must be a file of type: pdf, doc, docx, ppt, xls, zip, rar, jpg, png.';
+            event.preventDefault();
+            return;
+        }
+    });
+</script>
 
 @endsection

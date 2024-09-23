@@ -17,15 +17,15 @@
         <form method="POST" action="{{ route('register.post') }}">
             @csrf
             <div class="mb-3">
-                <label for="user_name" class="form-label">User Name</label>
+                <label for="user_name" class="form-label">User Name <span class="text-danger">*</span></label>
                 <input type="text" name="user_name" class="form-control border" id="user_name" required>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label ">Password</label>
+                <label for="password" class="form-label ">Password <span class="text-danger">*</span></label>
                 <input type="password" name="password" class="form-control border" id="password" required>
             </div>
             <div class="mb-3">
-                <label for="password-confirm" class="form-label ">Confirm Password</label>
+                <label for="password-confirm" class="form-label ">Confirm Password <span class="text-danger">*</span></label>
                 <input type="password" name="password_confirmation" class="form-control border" id="password-confirm" required  onchange="checkpassword()">
                 <span class="text-danger small mt-2 d-none" id="error-msg">** Passwords do not match</span>
             </div>
