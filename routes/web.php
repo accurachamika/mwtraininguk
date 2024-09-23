@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DataMigrationController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,8 +25,22 @@ Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post')
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/run-seeder', [UserController::class, 'runSeeder']);
 
-#Protected Routes
+#Protected Routes for Admin
 Route::middleware(['checkUserType:admin'])->group(function () {
+
+#Migrate Data Routes
+Route::get('/migrate-users', [DataMigrationController::class, 'migrateUsers'])->name('migrateUsers');
+
+#User List Route
+Route::get('/userList', function () {
+    $user = \App\Models\User::all();
+    return view('pages.userList', ['users'=> $user] );
+}) ->name('userlist');
+
+#User Activation Route
+Route::get('/userlist/user-activate/{id}', [UserController::class , 'acc_activate']) ->name('acc_activate');
+
+Route::get('/truncateUser', [DataMigrationController::class , 'truncateUsers']) ->name('truncateUsers');
 
 #Upload Route
 Route::get('/document', function () {
@@ -74,7 +89,7 @@ Route::get('/category/truncate', [CategoryController::class, 'truncate'])->name(
 });
 
 
-#Protected Routes
+#Protected Routes for students
 Route::middleware(['checkUserType:student'])->group(function () {
 Route::get('/stdManage', [DocumentController::class , 'std_Filter']) ->name('stdManage');
 Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.stdView');

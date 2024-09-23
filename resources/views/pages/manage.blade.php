@@ -31,8 +31,8 @@
                 @endif
                 <a href="{{ route('upload') }}" class="btn btn-outline-success mx-1"> <i
                     class="far fa-trash-alt"></i> Upload Documents</a>
-                <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger"> <i
-                    class="far fa-trash-alt"></i> Delete Resource Folder</a>
+                <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete all the resources? This action cannot be undone.');"> <i
+                    class="far fa-trash-alt" ></i> Delete Resource Folder</a>
             </div>
         </div>
 
@@ -50,7 +50,7 @@
             @endif
             <a href="{{ route('upload') }}" class="btn btn-outline-success mx-1"> <i
                 class="far fa-trash-alt"></i> Upload Documents</a>
-            <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger btn-resource"> <i
+            <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger btn-resource" onclick="return confirm('Are you sure you want to delete all the resources? This action cannot be undone.');"> <i
                 class="far fa-trash-alt"></i> Delete Resource Folder</a>
         </div>
         {{-- Display categories --}}

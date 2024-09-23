@@ -46,7 +46,7 @@
                 <div class="card-content " style="max-width: 100%; overflow-x: auto">
                     @if (count($categories) > 0)
                         <div class="text-end w-100 mb-2">
-                            <a href="{{ route('category.truncate') }}" class="btn btn-outline-danger"> <i
+                            <a href="{{ route('category.truncate') }}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete all categories? This action cannot be undone.');"> <i
                                     class="far fa-trash-alt"></i> Delete All Categories</a>
                         </div>
                     @endif
@@ -94,7 +94,8 @@
             "searching": true,      // Enable searching
             "info": true,           // Show table information
             "lengthChange": true,    // Enable the ability to change page length
-            "pageLength": 5         // Set the default number of records per page
+            "pageLength": 5,         // Set the default number of records per page
+            "lengthMenu": [5, 10, 25, 50, 100] // Define options for page length dropdown
         });
     });
 </script>
