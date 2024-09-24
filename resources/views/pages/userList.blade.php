@@ -27,6 +27,10 @@
       </div>
       <div class="card-content text-end">
         <a href="{{route('migrateUsers')}}" class="btn btn-outline-success">Migrate Users</a>
+        <a href="{{route('migrateData')}}" class="btn btn-outline-success">Migrate Users Documents</a>
+        <a href="{{route('migrateDocs')}}" class="btn btn-outline-warning ">Migrate Documents Only</a>
+        <a href="{{ route('doc.resource') }}" class="btn btn-outline-danger btn-resource me-3" onclick="return confirm('Are you sure you want to delete all the resources? This action cannot be undone.');"> <i
+            class="far fa-trash-alt"></i> Delete Resource Folder</a>
 
         <a href="{{route('truncateUsers')}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete all users? This action cannot be undone.');">Delete All Users</a>
         <a href="{{route('bulk_activate')}}" class="btn btn-outline-info">User Bulk Activation</a>
