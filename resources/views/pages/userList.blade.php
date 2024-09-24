@@ -29,7 +29,9 @@
         <a href="{{route('migrateUsers')}}" class="btn btn-outline-success">Migrate Users</a>
 
         <a href="{{route('truncateUsers')}}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete all users? This action cannot be undone.');">Delete All Users</a>
-      </div>
+        <a href="{{route('bulk_activate')}}" class="btn btn-outline-info">User Bulk Activation</a>
+      
+        </div>
       @if($users)
       <div class="card-content" style="max-width: 100%; overflow-x: auto">
         <table class="table" id="data-table" style="width: 100%; table-layout: auto; white-space: nowrap;">

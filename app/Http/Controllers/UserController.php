@@ -106,4 +106,18 @@ class UserController extends BaseController
             return redirect()->route('userlist')->with('error', ($user->active === 1) ? 'User fail to Activate' : 'User fail to Deactivate');
         }
     }
+
+    public function bulk_activate() {
+        $users = User::all();
+
+        foreach ( $users as $user) {
+            if($user->active === 0){
+                $user->active = 1;
+            }
+            $user->save();
+        }
+
+        return redirect()->route('userlist')->with('success',  'Users are Successfully Activated');
+        
+    }
 }
