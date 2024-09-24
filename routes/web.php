@@ -66,6 +66,7 @@ Route::get('/manage/update/{id}', [DocumentController::class , 'manageUpdate']) 
 Route::post('/manage/update-post', [DocumentController::class , 'updatePost']) ->name('edit.post');
 
 Route::get('/manage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.view');
+Route::get('/manage/viewDoc/{id}', [DocumentController::class , 'manageDocView']) ->name('manage.doc.view');
 
 Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) ->name('manage.delete');
 Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
@@ -101,10 +102,9 @@ Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) -
 
 
 #Unprotected Routes
-Route::get('/home', function () { return view('pages.home'); }) ->name('home');
-Route::get('/manage/viewDoc/{id}', [DocumentController::class , 'manageDocView']) ->name('manage.doc.view');
-
-
+Route::middleware(['checkUserType:student,admin'])->group(function () {
+    Route::get('/home', function () { return view('pages.home'); }) ->name('home');
+});
 
 
 

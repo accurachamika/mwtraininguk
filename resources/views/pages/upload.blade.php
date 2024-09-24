@@ -66,7 +66,7 @@
 
                     <div class="col-md-6">
                       <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
-                      <input class="form-control" type="file" id="document" name="document" required>
+                      <input class="form-control" type="file" id="document" name="document" required onchange="validateFile()">
                       <input class="form-control" type="text" id="uploaded_by" name="uploaded_by" value="{{Auth::user()->user_name}}" hidden>
                       <small id="file-error" class="text-danger"></small> <!-- Display error here -->
                     </div>
@@ -88,37 +88,48 @@
 
 <!-- Frontend File Validation Script -->
 <script>
-    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      function validateFile() {
         const allowedFileTypes = ['pdf', 'doc', 'docx', 'ppt', 'xls', 'zip', 'rar', 'jpg', 'png'];
         const fileInput = document.getElementById('document');
-        const file = fileInput.files[0];
         const fileError = document.getElementById('file-error');
+        const file = fileInput.files[0];
 
         // Reset error message
         fileError.textContent = '';
-
-        // Check if a file is selected
-        if (!file) {
-            fileError.textContent = 'Please select a file to upload.';
-            event.preventDefault();
-            return;
-        }
-
-        // Check file size (5MB = 5242880 bytes)
-        if (file.size > 5242880) {
-            fileError.textContent = 'The file may not be greater than 5MB.';
-            event.preventDefault();
-            return;
-        }
 
         // Check file type
         const fileExtension = file.name.split('.').pop().toLowerCase();
         if (!allowedFileTypes.includes(fileExtension)) {
             fileError.textContent = 'The document must be a file of type: pdf, doc, docx, ppt, xls, zip, rar, jpg, png.';
+            return false;
+        }
+
+        // Check if a file is selected
+        if (!file) {
+            fileError.textContent = 'Please select a file to upload.';
+            return false;
+        }
+
+        // Check file size (5MB = 5242880 bytes)
+        if (file.size > 5242880) {
+            fileError.textContent = 'The file may not be greater than 5MB.';
+            return false;
+        }
+
+
+        // File is valid
+        return true;
+    }
+
+    // Submit form event
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        if (!validateFile()) {
+            // Prevent form submission if validation fails
             event.preventDefault();
-            return;
         }
     });
+
+
 </script>
 
 @endsection

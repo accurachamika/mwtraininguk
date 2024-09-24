@@ -15,7 +15,7 @@ class CheckUserType
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next , $role)
+    public function handle(Request $request, Closure $next , ...$role)
     {
         // Check if the user is authenticated
         if (!Auth::check()) {
@@ -23,7 +23,7 @@ class CheckUserType
         }
 
         // Check if the authenticated user's role matches the required role
-        if (Auth::user()->user_type !== $role) {
+        if (!in_array(Auth::user()->user_type , $role)) {
             return redirect('/home')->with('error', 'Unauthorized Access');
         }
 
