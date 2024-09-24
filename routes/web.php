@@ -24,13 +24,15 @@ Route::post('/user-register', [UserController::class, 'regPost'])->name('registe
 Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/run-seeder', [UserController::class, 'runSeeder']);
-Route::get('/migrateDocs', [DataMigrationController::class, 'migrateDocs']);
 
 #Protected Routes for Admin
 Route::middleware(['checkUserType:admin'])->group(function () {
 
 #Migrate Data Routes
 Route::get('/migrate-users', [DataMigrationController::class, 'migrateUsers'])->name('migrateUsers');
+Route::get('/migrate-usersDocs', [DataMigrationController::class, 'migrateUsersDocs'])->name('migrateData');
+Route::get('/migrate-onlyDocs', [DataMigrationController::class, 'migrateDocs'])->name('migrateDocs');
+
 
 #User List Route
 Route::get('/userList', function () {
@@ -52,6 +54,8 @@ Route::get('/document', function () {
 }) ->name('upload');
 
 Route::post('/document/upload', [DocumentController::class,'docPost'] )->name('upload.post');
+
+#Documents Delete Route
 Route::get('/document/truncate', [DocumentController::class, 'truncate'])->name('doc.truncate'); // Clear Document table at once
 Route::get('/document/truncate-res', [DocumentController::class, 'truncateRes'])->name('doc.resource'); // Clear Document table at once
 
@@ -72,13 +76,14 @@ Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) 
 Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
 Route::get('/manage/search/{id}', [DocumentController::class , 'filter']) ->name('manage.search');
 
+
+#Search Route
 Route::get('/search', function () { 
     $categories = \App\Models\Category::all();
     return view('pages.search', ['categories'=> $categories] ); 
 }) ->name('search');
 
 Route::post('/search-post', [DocumentController::class , 'search']) ->name('search.post');
-
 
 
 #Category Route
@@ -101,7 +106,7 @@ Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) -
 });
 
 
-#Unprotected Routes
+#Common Routes
 Route::middleware(['checkUserType:student,admin'])->group(function () {
     Route::get('/home', function () { return view('pages.home'); }) ->name('home');
 });
