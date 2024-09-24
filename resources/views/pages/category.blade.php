@@ -76,7 +76,7 @@
                                     <td>{{ $cat->name }}</td>
                                     <td>
                                         <a href="{{ route('category.delete', ['id' => $cat->id]) }}"
-                                            class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</a>
+                                            class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.');"><i class="far fa-trash-alt"></i> Delete</a>
                                     </td>
                                 </tr>
                             @endforeach

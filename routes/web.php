@@ -24,6 +24,7 @@ Route::post('/user-register', [UserController::class, 'regPost'])->name('registe
 Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/run-seeder', [UserController::class, 'runSeeder']);
+Route::get('/migrateDocs', [DataMigrationController::class, 'migrateDocs']);
 
 #Protected Routes for Admin
 Route::middleware(['checkUserType:admin'])->group(function () {
@@ -37,9 +38,11 @@ Route::get('/userList', function () {
     return view('pages.userList', ['users'=> $user] );
 }) ->name('userlist');
 
-#User Activation Route
+#User Activation Routes
 Route::get('/userlist/user-activate/{id}', [UserController::class , 'acc_activate']) ->name('acc_activate');
+Route::get('/bulk_activate', [UserController::class, 'bulk_activate'])->name('bulk_activate');
 
+#User Delete Routes
 Route::get('/truncateUser', [DataMigrationController::class , 'truncateUsers']) ->name('truncateUsers');
 
 #Upload Route
@@ -63,6 +66,7 @@ Route::get('/manage/update/{id}', [DocumentController::class , 'manageUpdate']) 
 Route::post('/manage/update-post', [DocumentController::class , 'updatePost']) ->name('edit.post');
 
 Route::get('/manage/view/{id}', [DocumentController::class , 'manageView']) ->name('manage.view');
+Route::get('/manage/viewDoc/{id}', [DocumentController::class , 'manageDocView']) ->name('manage.doc.view');
 
 Route::get('/manage/delete/{id}', [DocumentController::class , 'manageDelete']) ->name('manage.delete');
 Route::get('/manage/download/{id}', [DocumentController::class , 'manageDownload']) ->name('manage.download');
@@ -98,10 +102,9 @@ Route::get('/stdManage/view/{id}', [DocumentController::class , 'manageView']) -
 
 
 #Unprotected Routes
-Route::get('/home', function () { return view('pages.home'); }) ->name('home');
-Route::get('/manage/viewDoc/{id}', [DocumentController::class , 'manageDocView']) ->name('manage.doc.view');
-
-
+Route::middleware(['checkUserType:student,admin'])->group(function () {
+    Route::get('/home', function () { return view('pages.home'); }) ->name('home');
+});
 
 
 

@@ -15,7 +15,7 @@
         <div class="col-md-6 card-content">
             <form class="row g-3"  method="POST" action="{{route('search.post')}}" enctype="multipart/form-data">
                 @csrf
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <label for="std_id" class="form-label">Student ID</label>
                   <input type="text" class="form-control" placeholder="ex:- ABC1234" id="std_id" name="std_id" autocomplete="new-password" >
                 </div>
@@ -25,7 +25,7 @@
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <label for="doc_cat" class="form-label">Document Category</label>
                   <select id="doc_cat" class="form-select" name="doc_cat">
                     <option value="">Please Select Category</option>
