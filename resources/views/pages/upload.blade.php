@@ -68,6 +68,7 @@
                       <label for="document" class="form-label">Document <span class="text-danger">*</span></label>
                       <input class="form-control" type="file" id="document" name="document" required onchange="validateFile()">
                       <input class="form-control" type="text" id="uploaded_by" name="uploaded_by" value="{{Auth::user()->user_name}}" hidden>
+                      <small class="text-warning"><i class="fas fa-exclamation-circle"></i> Files Types : pdf, doc , docx, ppt, xls , zip , rar , jpg , png <b>(Maximum : 5 MB) </b></small> <br>
                       <small id="file-error" class="text-danger"></small> <!-- Display error here -->
                     </div>
                     <div class="col-md-6">
