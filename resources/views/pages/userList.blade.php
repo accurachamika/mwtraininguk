@@ -70,7 +70,7 @@
                     </td>
                     <td>
                         @if($user->active !== 0)
-                            <a href="{{route('acc_activate' , ['id' => $user->user_id])}}" class="btn btn-danger">Deactivate</a>
+                            <a href="{{route('acc_activate' , ['id' => $user->user_id])}}" class="btn btn-danger {{$user->user_type  === 'admin' ? 'disabled' : ''}}"  >Deactivate</a>
                         @else
                             <a href="{{route('acc_activate' , ['id' => $user->user_id])}}" class="btn btn-success">Activate</a>
                         @endif

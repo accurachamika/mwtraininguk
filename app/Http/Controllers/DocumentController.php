@@ -64,7 +64,7 @@ class DocumentController extends Controller
         $documentCreated = Document::create([
             'file_name' => $newFileName,
             'std_id' => $std_id,
-            'std_name' => $std_name,
+            'std_name' => $request->std_name,
             'doc_type' => $doc_cat,
             'last_updated' => Carbon::now(),
             'doc_category' => $doc_cat,
@@ -180,7 +180,7 @@ class DocumentController extends Controller
 
         # Update other fields in the database
         $documentRecord->std_id = $std_id;
-        $documentRecord->std_name = $std_name;
+        $documentRecord->std_name = $request->std_name;
         $documentRecord->doc_type = $doc_cat;
         $documentRecord->last_updated = Carbon::now();
         $documentRecord->desc = $doc_desc;
