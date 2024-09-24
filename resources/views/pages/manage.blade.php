@@ -92,7 +92,7 @@
                                 <td> 
                                     <a href="{{route('manage.view' , $doc->doc_id )}}" class="small text-info" title="View Document"><i class="fas fa-eye"></i></a> |
                                     <a href="{{route('manage.update' , $doc->doc_id )}}" class="small text-warning" title="Edit Document"><i class="fas fa-edit"></i></a> |
-                                    <a href="{{route('manage.delete' , $doc->doc_id )}}" class="small text-danger" title="Delete Document"><i class="fas fa-trash-alt"></i></a> |
+                                    <a href="{{route('manage.delete' , $doc->doc_id )}}" class="small text-danger" title="Delete Document" onclick="return confirm('Are you sure you want to delete the file? This action cannot be undone.');"><i class="fas fa-trash-alt"></i></a> |
                                     <a href="{{route('manage.download' , $doc->doc_id )}}" class="small text-success" title="Download Document"><i class="fas fa-file-download"></i></a> |
                                     <a href="{{route('manage.search' , $doc->std_id )}}" class="small text-primary" title="Download Document"><i class="fas fa-search"></i></a>
                                 </td>
