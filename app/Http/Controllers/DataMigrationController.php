@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentOld;
 use App\Models\User;
 use App\Models\UserOld;
 use Carbon\Carbon;
@@ -46,6 +47,20 @@ class DataMigrationController extends Controller
         Artisan::call('db:seed', ['--class' => 'UsersTableSeeder']);
 
         return redirect()->route('userlist')->with('success', 'Users are Successfully deleted');
+    }
+
+
+    public function migrateDocs() {
+        ini_set('max_execution_time', 1000);
+        
+        $users = User::all();
+        $arr = [];
+        foreach ($users as $user ) {
+            $old_doc = DocumentOld::where('student_id' , $user->user_name)->get();
+            array_push($arr , $old_doc);
+        }
+
+        return dd($arr , $users);
     }
 
 

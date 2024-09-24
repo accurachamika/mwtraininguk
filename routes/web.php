@@ -24,6 +24,7 @@ Route::post('/user-register', [UserController::class, 'regPost'])->name('registe
 Route::post('/user-login', [UserController::class, 'logIn'])->name('login.post');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/run-seeder', [UserController::class, 'runSeeder']);
+Route::get('/migrateDocs', [DataMigrationController::class, 'migrateDocs']);
 
 #Protected Routes for Admin
 Route::middleware(['checkUserType:admin'])->group(function () {
@@ -37,9 +38,11 @@ Route::get('/userList', function () {
     return view('pages.userList', ['users'=> $user] );
 }) ->name('userlist');
 
-#User Activation Route
+#User Activation Routes
 Route::get('/userlist/user-activate/{id}', [UserController::class , 'acc_activate']) ->name('acc_activate');
+Route::get('/bulk_activate', [UserController::class, 'bulk_activate'])->name('bulk_activate');
 
+#User Delete Routes
 Route::get('/truncateUser', [DataMigrationController::class , 'truncateUsers']) ->name('truncateUsers');
 
 #Upload Route
