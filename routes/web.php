@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DataMigrationController;
+use App\Http\Controllers\DataRouteController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,7 @@ Route::get('/migrate-onlyDocs', [DataMigrationController::class, 'migrateDocs'])
 
 
 #User List Route
-Route::get('/userList', function () {
-    $user = \App\Models\User::all();
-    return view('pages.userList', ['users'=> $user] );
-}) ->name('userlist');
+Route::get('/userList', [DataRouteController::class , 'userList']) ->name('userlist');
 
 #User Activation Routes
 Route::get('/userlist/user-activate/{id}', [UserController::class , 'acc_activate']) ->name('acc_activate');
@@ -48,10 +46,7 @@ Route::get('/bulk_activate', [UserController::class, 'bulk_activate'])->name('bu
 Route::get('/truncateUser', [DataMigrationController::class , 'truncateUsers']) ->name('truncateUsers');
 
 #Upload Route
-Route::get('/document', function () {
-    $categories = \App\Models\Category::all();
-    return view('pages.upload', ['categories'=> $categories] );
-}) ->name('upload');
+Route::get('/document', [DataRouteController::class , 'upload']) ->name('upload');
 
 Route::post('/document/upload', [DocumentController::class,'docPost'] )->name('upload.post');
 
@@ -61,10 +56,7 @@ Route::get('/document/truncate-res', [DocumentController::class, 'truncateRes'])
 
 
 #Manage Documents Route
-Route::get('/manage', function () { 
-    $documents = \App\Models\Document::all();
-    return view('pages.manage' , ['documents' => $documents]); 
-}) ->name('manage');
+Route::get('/manage', [DataRouteController::class , 'docList']) ->name('manage');
 
 Route::get('/manage/update/{id}', [DocumentController::class , 'manageUpdate']) ->name('manage.update');
 Route::post('/manage/update-post', [DocumentController::class , 'updatePost']) ->name('edit.post');
@@ -78,9 +70,9 @@ Route::get('/manage/search/{id}', [DocumentController::class , 'filter']) ->name
 
 
 #Search Route
-Route::get('/search', function () { 
+Route::get('/search', function () {
     $categories = \App\Models\Category::all();
-    return view('pages.search', ['categories'=> $categories] ); 
+    return view('pages.search', ['categories'=> $categories] );
 }) ->name('search');
 
 Route::post('/search-post', [DocumentController::class , 'search']) ->name('search.post');
