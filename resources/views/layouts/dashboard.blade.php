@@ -48,7 +48,7 @@
             <nav class="navbar bg-light navbar-light">
 
                 <a href="{{route('home')}}" class="navbar-brand mx-4 mb-3 text-center">
-                    <h4 class="text-primary">mwTRAININGuk</h4>
+                    <h4 class="text-primary text-lowercase">mwTRAININGuk</h4>
                 </a>
 
                 <div class="navbar-nav w-100">
