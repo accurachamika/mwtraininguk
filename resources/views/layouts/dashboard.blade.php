@@ -57,7 +57,7 @@
                     @if(Auth::user()->user_type === 'admin')
                     <a href="{{route('userlist')}}" class="nav-item nav-link {{Route::is('userlist')? 'active' : ''}}"><i class="fas fa-users"></i>User List</a>
                     <a href="{{route('search')}}" class="nav-item nav-link {{Route::is('search')? 'active' : ''}}"><i class="fas fa-search"></i>Search</a>
-                    <a href="{{route('category')}}" class="nav-item nav-link {{Route::is('category')? 'active' : ''}}"><i class="fas fa-clipboard-list"></i>Categorys</a>
+                    <a href="{{route('category')}}" class="nav-item nav-link {{Route::is('category')? 'active' : ''}}"><i class="fas fa-clipboard-list"></i>Category</a>
                     <a href="{{route('upload')}}" class="nav-item nav-link {{Route::is('upload')? 'active' : ''}}"><i class="fas fa-file-upload"></i>Upload</a>
                     <a href="{{route('manage')}}" class="nav-item nav-link {{Route::is('manage')? 'active' : ''}}"><i class="fas fa-tasks"></i>Manage</a>
 
