@@ -39,7 +39,7 @@ class UserController extends BaseController
         event(new Registered($user));
         Auth::login($user);
 
-        return redirect()->route('login')->with(['success'=> 'Account created successfully.Please wait for Admin approval!']);
+        return redirect()->route('login')->with(['success'=> 'Account created successfully.']);
     }
 
 
@@ -89,7 +89,7 @@ class UserController extends BaseController
         Artisan::call('db:seed', ['--class' => 'UsersTableSeeder']);
         return 'Seeder has been executed!';
     }
-    
+
 
     public function acc_activate($id) {
         $user = User::find($id);
@@ -118,6 +118,6 @@ class UserController extends BaseController
         }
 
         return redirect()->route('userlist')->with('success',  'Users are Successfully Activated');
-        
+
     }
 }
