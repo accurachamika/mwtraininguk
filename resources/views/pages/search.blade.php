@@ -13,7 +13,7 @@
         </div>
 
         <div class="col-md-6 card-content">
-            <form class="row g-3"  method="POST" action="{{route('search.post')}}" enctype="multipart/form-data">
+            <form class="row g-3"  method="GET" action="{{route('search.post')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                   <label for="std_id" class="form-label">Student ID</label>
