@@ -32,10 +32,10 @@ class DocumentController extends Controller
             'document.mimes' => 'The document must be a file of type: pdf, doc, docx, ppt, xls, zip, rar, jpg, png.',
             'document.max' => 'The document may not be greater than 5MB.', // Updated error message for size limit
         ]);
-        
 
 
-        #Student Details 
+
+        #Student Details
         $std_id = $request->std_id;
         $std_name = str_replace(' ', '_', $request->std_name);
         $doc_cat = $request->doc_cat;
@@ -330,7 +330,14 @@ class DocumentController extends Controller
             })
             ->when($doc_cat, function ($query, $doc_cat) {
                 return $query->where('doc_type', $doc_cat);
-            })->get();
+            })->paginate(10);
+
+            // Append search parameters to pagination links
+            $documents->appends([
+                'std_id' => $std_id,
+                'std_name' => $std_name,
+                'doc_cat' => $doc_cat,
+            ]);
 
         return view('pages.manage', ['documents' => $documents]);
     }

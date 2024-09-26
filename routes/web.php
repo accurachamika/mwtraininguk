@@ -47,6 +47,8 @@ Route::get('/truncateUser', [DataMigrationController::class , 'truncateUsers']) 
 
 #Upload Route
 Route::get('/document', [DataRouteController::class , 'upload']) ->name('upload');
+Route::get('/cat-jquery', [DataRouteController::class , 'catJquery']) ->name('catJquery');
+
 
 Route::post('/document/upload', [DocumentController::class,'docPost'] )->name('upload.post');
 
@@ -74,7 +76,7 @@ Route::get('/search', function () {
     return view('pages.search', ['categories'=> $categories] );
 }) ->name('search');
 
-Route::post('/search-post', [DocumentController::class , 'search']) ->name('search.post');
+Route::get('/search-post', [DocumentController::class , 'search']) ->name('search.post');
 
 
 #Category Route

@@ -68,6 +68,32 @@
             </div>
             {{-- Display categories --}}
             <div class="col-md-12 px-0">
+                <div class="card-content mb-3">
+                    <form class="row g-3 align-items-end"  method="GET" action="{{route('search.post')}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="col-md-3">
+                          <label for="std_id" class="form-label">Student ID</label>
+                          <input type="text" class="form-control" placeholder="ex:- ABC1234" id="std_id" name="std_id" autocomplete="new-password" @if( request('std_id')) value="{{request('std_id')}}" @endif>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="std_name" class="form-label">Student Name </label>
+                          <input type="text" class="form-control" placeholder="ex:- Jack" id="std_name" name="std_name" autocomplete="new-password" @if( request('std_name')) value="{{request('std_name')}}" @endif>
+                        </div>
+
+
+                        <div class="col-md-3">
+                          <label for="doc_cat" class="form-label">Document Category</label>
+                          <select id="doc_cat" class="form-select" name="doc_cat" id="doc_cat">
+                            <option value="" hidden>Please Select Category</option>
+                            <option value="" >All Categories</option>
+                          </select>
+                        </div>
+
+                        <div class="col-3 text-center">
+                          <button type="submit" class="btn btn-primary">Search Documents</button>
+                        </div>
+                      </form>
+                </div>
                 <div class="card-content " style="max-width: 100%; overflow-x: auto">
                     <table class="table table-hover" id="data-table"
                         style="width: 100%; table-layout: auto; white-space: nowrap;">
@@ -124,56 +150,90 @@
         </div>
     </div>
     @if ($documents instanceof \Illuminate\Pagination\LengthAwarePaginator)
-    @if ($documents->hasPages())
-        <div class="d-flex justify-content-between mx-3 mt-3">
-            <div>Showing {{ $documents->firstItem() }} to {{ $documents->lastItem() }} of {{ $documents->total() }} entries</div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination pagination-sm m-0">
-                    {{-- Previous Page Link --}}
-                    @if ($documents->onFirstPage())
-                        <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
-                    @else
-                        <li class="page-item"><a class="page-link" href="{{ $documents->previousPageUrl() }}" aria-label="Previous">&laquo; Previous</a></li>
-                    @endif
-
-                    {{-- Pagination Links --}}
-                    @for ($page = 1; $page <= $documents->lastPage(); $page++)
-                        @if ($page == 1 || $page == 2 || $page == $documents->lastPage() || $page == $documents->lastPage() - 1 || ($page >= $documents->currentPage() - 1 && $page <= $documents->currentPage() + 1))
-                            @if ($page == $documents->currentPage())
-                                <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
-                            @else
-                                <li class="page-item"><a class="page-link" href="{{ $documents->url($page) }}">{{ $page }}</a></li>
-                            @endif
-                        @elseif ($page == 3 && $documents->currentPage() > 4)
-                            <li class="page-item disabled"><span class="page-link">...</span></li>
-                        @elseif ($page == $documents->lastPage() - 2 && $documents->currentPage() < $documents->lastPage() - 3)
-                            <li class="page-item disabled"><span class="page-link">...</span></li>
+        @if ($documents->hasPages())
+            <div class="d-flex justify-content-between mx-3 mt-3">
+                <div>Showing {{ $documents->firstItem() }} to {{ $documents->lastItem() }} of {{ $documents->total() }}
+                    entries</div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm m-0">
+                        {{-- Previous Page Link --}}
+                        @if ($documents->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo; Previous</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link" href="{{ $documents->previousPageUrl() }}"
+                                    aria-label="Previous">&laquo; Previous</a></li>
                         @endif
-                    @endfor
 
-                    {{-- Next Page Link --}}
-                    @if ($documents->hasMorePages())
-                        <li class="page-item"><a class="page-link" href="{{ $documents->nextPageUrl() }}" aria-label="Next">Next &raquo;</a></li>
-                    @else
-                        <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
-                    @endif
-                </ul>
-            </nav>
-        </div>
+                        {{-- Pagination Links --}}
+                        @for ($page = 1; $page <= $documents->lastPage(); $page++)
+                            @if (
+                                $page == 1 ||
+                                    $page == 2 ||
+                                    $page == $documents->lastPage() ||
+                                    $page == $documents->lastPage() - 1 ||
+                                    ($page >= $documents->currentPage() - 1 && $page <= $documents->currentPage() + 1))
+                                @if ($page == $documents->currentPage())
+                                    <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                                @else
+                                    <li class="page-item"><a class="page-link"
+                                            href="{{ $documents->url($page) }}">{{ $page }}</a></li>
+                                @endif
+                            @elseif ($page == 3 && $documents->currentPage() > 4)
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            @elseif ($page == $documents->lastPage() - 2 && $documents->currentPage() < $documents->lastPage() - 3)
+                                <li class="page-item disabled"><span class="page-link">...</span></li>
+                            @endif
+                        @endfor
+
+                        {{-- Next Page Link --}}
+                        @if ($documents->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $documents->nextPageUrl() }}"
+                                    aria-label="Next">Next &raquo;</a></li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">Next &raquo;</span></li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
+        @endif
     @endif
-@endif
 
 
 
     @if (count($documents) > 0)
+        <script>
+            $(document).ready(function() {
+                $('#data-table').DataTable({
+                    "paging": false, // Enable pagination
+                    "searching": false, // Enable searching
+                    "info": false, // Show table information
+                });
+            });
+        </script>
+    @endif
+
     <script>
         $(document).ready(function() {
-            $('#data-table').DataTable({
-                "paging": false, // Enable pagination
-                "searching": true, // Enable searching
-                "info": false, // Show table information
+            $.ajax({
+                url: "{{ route('catJquery') }}", // Fetch categories
+                method: 'GET',
+                success: function(response) {
+                    var selectedCat = "{{ request('doc_cat') }}"; // Get the selected category from request
+                    var select = $('#doc_cat'); // Select the dropdown element
+
+                    $.each(response, function(index, cat) {
+                        // Check if the category from the response matches the selected one
+                        var isSelected = selectedCat === cat.name ? 'selected' : '';
+
+                        // Append option with dynamic selected attribute
+                        select.append('<option value="' + cat.name + '" ' + isSelected + '>' + cat.name + '</option>');
+                    });
+                },
+                error: function() {
+                    alert('Error fetching categories');
+                }
             });
         });
     </script>
-    @endif
+
 @endsection
