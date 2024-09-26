@@ -24,6 +24,15 @@ class DataRouteController extends Controller
     #Document upload View
     public function docList()  {
         $documents = Document::paginate(10);
-        return view('pages.manage' , ['documents' => $documents]);
+        return view('pages.manage' , ['documents' => $documents ]);
+    }
+
+    #Category Jquery Fetch
+    public function catJquery()
+    {
+        $categories = Category::all();
+
+        // Return categories as JSON response
+        return response()->json($categories);
     }
 }
